@@ -4,31 +4,6 @@
   
     
     <entry>
-      <title>2325. 解密消息(简单)</title>
-      <link href="/article/a7357e06.html"/>
-      <url>/article/a7357e06.html</url>
-      
-        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote><h4 id="2325-解密消息"><a href="#2325-解密消息" class="headerlink" title="2325. 解密消息"></a><a href="https://leetcode.cn/problems/decode-the-message/">2325. 解密消息</a></h4><p>给你字符串 <code>key</code> 和 <code>message</code> ，分别表示一个加密密钥和一段加密消息。解密 <code>message</code> 的步骤如下：</p><ol><li>使用 <code>key</code> 中 26 个英文小写字母第一次出现的顺序作为替换表中的字母 <strong>顺序</strong> 。</li><li>将替换表与普通英文字母表对齐，形成对照表。</li><li>按照对照表 <strong>替换</strong> <code>message</code> 中的每个字母。</li><li>空格 <code>&#39; &#39;</code> 保持不变。</li></ol><ul><li>例如，<code>key = &quot;***hap***p***y*** ***bo***y&quot;</code>（实际的加密密钥会包含字母表中每个字母 <strong>至少一次</strong>），据此，可以得到部分对照表（<code>&#39;h&#39; -&gt; &#39;a&#39;</code>、<code>&#39;a&#39; -&gt; &#39;b&#39;</code>、<code>&#39;p&#39; -&gt; &#39;c&#39;</code>、<code>&#39;y&#39; -&gt; &#39;d&#39;</code>、<code>&#39;b&#39; -&gt; &#39;e&#39;</code>、<code>&#39;o&#39; -&gt; &#39;f&#39;</code>）。</li></ul><p>返回解密后的消息。</p><p><strong>示例 1：</strong></p><p><img src="https://s1.vika.cn/space/2023/02/01/1627ff0495bf44ce82ae5e008bde4676" alt="img"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：key = &quot;the quick brown fox jumps over the lazy dog&quot;, message = &quot;vkbs bs t suepuv&quot;</span><br><span class="line">输出：&quot;this is a secret&quot;</span><br><span class="line">解释：对照表如上图所示。</span><br><span class="line">提取 &quot;the quick brown fox jumps over the lazy dog&quot; 中每个字母的首次出现可以得到替换表。</span><br></pre></td></tr></table></figure><p><strong>示例 2：</strong></p><p><img src="https://s1.vika.cn/space/2023/02/01/0349ccd7a0c54f99bac479821a3114c6" alt="img"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：key = &quot;eljuxhpwnyrdgtqkviszcfmabo&quot;, message = &quot;zwx hnfx lqantp mnoeius ycgk vcnjrdb&quot;</span><br><span class="line">输出：&quot;the five boxing wizards jump quickly&quot;</span><br><span class="line">解释：对照表如上图所示。</span><br><span class="line">提取 &quot;eljuxhpwnyrdgtqkviszcfmabo&quot; 中每个字母的首次出现可以得到替换表。</span><br></pre></td></tr></table></figure><p><strong>提示：</strong></p><ul><li><code>26 &lt;= key.length &lt;= 2000</code></li><li><code>key</code> 由小写英文字母及 <code>&#39; &#39;</code> 组成</li><li><code>key</code> 包含英文字母表中每个字符（<code>&#39;a&#39;</code> 到 <code>&#39;z&#39;</code>）<strong>至少一次</strong></li><li><code>1 &lt;= message.length &lt;= 2000</code></li><li><code>message</code> 由小写英文字母和 <code>&#39; &#39;</code> 组成</li></ul></blockquote><h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">decodeMessage</span><span class="params">(string key, string message)</span> </span>&#123;</span><br><span class="line">        <span class="type">char</span> a = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        unordered_map&lt;<span class="type">char</span>, <span class="type">char</span>&gt; rules;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span> c : key) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">&#x27; &#x27;</span> &amp;&amp; rules.<span class="built_in">count</span>(c) == <span class="number">0</span>) &#123;</span><br><span class="line">                rules[c] = a;</span><br><span class="line">                ++a;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span>&amp; c : message) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                c = rules[c];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> LeetCode </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> LeetCode </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>使用 Obsidian 有感</title>
       <link href="/article/1cd98177.html"/>
       <url>/article/1cd98177.html</url>
@@ -46,6 +21,31 @@
         <tags>
             
             <tag> Obsidian </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>2325. 解密消息(简单)</title>
+      <link href="/article/a7357e06.html"/>
+      <url>/article/a7357e06.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote><h4 id="2325-解密消息"><a href="#2325-解密消息" class="headerlink" title="2325. 解密消息"></a><a href="https://leetcode.cn/problems/decode-the-message/">2325. 解密消息</a></h4><p>给你字符串 <code>key</code> 和 <code>message</code> ，分别表示一个加密密钥和一段加密消息。解密 <code>message</code> 的步骤如下：</p><ol><li>使用 <code>key</code> 中 26 个英文小写字母第一次出现的顺序作为替换表中的字母 <strong>顺序</strong> 。</li><li>将替换表与普通英文字母表对齐，形成对照表。</li><li>按照对照表 <strong>替换</strong> <code>message</code> 中的每个字母。</li><li>空格 <code>&#39; &#39;</code> 保持不变。</li></ol><ul><li>例如，<code>key = &quot;***hap***p***y*** ***bo***y&quot;</code>（实际的加密密钥会包含字母表中每个字母 <strong>至少一次</strong>），据此，可以得到部分对照表（<code>&#39;h&#39; -&gt; &#39;a&#39;</code>、<code>&#39;a&#39; -&gt; &#39;b&#39;</code>、<code>&#39;p&#39; -&gt; &#39;c&#39;</code>、<code>&#39;y&#39; -&gt; &#39;d&#39;</code>、<code>&#39;b&#39; -&gt; &#39;e&#39;</code>、<code>&#39;o&#39; -&gt; &#39;f&#39;</code>）。</li></ul><p>返回解密后的消息。</p><p><strong>示例 1：</strong></p><p><img src="https://s1.vika.cn/space/2023/02/01/1627ff0495bf44ce82ae5e008bde4676" alt="img"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：key = &quot;the quick brown fox jumps over the lazy dog&quot;, message = &quot;vkbs bs t suepuv&quot;</span><br><span class="line">输出：&quot;this is a secret&quot;</span><br><span class="line">解释：对照表如上图所示。</span><br><span class="line">提取 &quot;the quick brown fox jumps over the lazy dog&quot; 中每个字母的首次出现可以得到替换表。</span><br></pre></td></tr></table></figure><p><strong>示例 2：</strong></p><p><img src="https://s1.vika.cn/space/2023/02/01/0349ccd7a0c54f99bac479821a3114c6" alt="img"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：key = &quot;eljuxhpwnyrdgtqkviszcfmabo&quot;, message = &quot;zwx hnfx lqantp mnoeius ycgk vcnjrdb&quot;</span><br><span class="line">输出：&quot;the five boxing wizards jump quickly&quot;</span><br><span class="line">解释：对照表如上图所示。</span><br><span class="line">提取 &quot;eljuxhpwnyrdgtqkviszcfmabo&quot; 中每个字母的首次出现可以得到替换表。</span><br></pre></td></tr></table></figure><p><strong>提示：</strong></p><ul><li><code>26 &lt;= key.length &lt;= 2000</code></li><li><code>key</code> 由小写英文字母及 <code>&#39; &#39;</code> 组成</li><li><code>key</code> 包含英文字母表中每个字符（<code>&#39;a&#39;</code> 到 <code>&#39;z&#39;</code>）<strong>至少一次</strong></li><li><code>1 &lt;= message.length &lt;= 2000</code></li><li><code>message</code> 由小写英文字母和 <code>&#39; &#39;</code> 组成</li></ul></blockquote><h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">decodeMessage</span><span class="params">(string key, string message)</span> </span>&#123;</span><br><span class="line">        <span class="type">char</span> a = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">        unordered_map&lt;<span class="type">char</span>, <span class="type">char</span>&gt; rules;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span> c : key) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">&#x27; &#x27;</span> &amp;&amp; rules.<span class="built_in">count</span>(c) == <span class="number">0</span>) &#123;</span><br><span class="line">                rules[c] = a;</span><br><span class="line">                ++a;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span>&amp; c : message) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                c = rules[c];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LeetCode </tag>
             
         </tags>
       
