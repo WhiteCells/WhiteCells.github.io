@@ -154,31 +154,6 @@
     
     
     <entry>
-      <title>复杂度分析</title>
-      <link href="/article/54635.html"/>
-      <url>/article/54635.html</url>
-      
-        <content type="html"><![CDATA[<blockquote><ul><li>时间复杂度分析</li><li>算法超时</li><li>递归算法的时间复杂度</li><li>算法性能分析</li><li>空间复杂度分析</li><li>递归算法的性能分析</li><li>内存消耗</li></ul></blockquote><h2 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><h3 id="大-O-表示"><a href="#大-O-表示" class="headerlink" title="大 O 表示"></a>大 O 表示</h3><blockquote><p><code>大 O 表示上届的</code>，用它作为算法的最坏情况</p></blockquote><p>输入数据对程序运行速度有很大的影响，假设使用 <code>快速排序</code> ，如果输入的数据顺序是随机的，时间复杂度是 <code>O(nlogn)</code> ，但是当数据已经是有序的情况下，则时间复杂度是 <code>O(n^2)</code>。以 <code>大O</code> 的定义来讲，快速排序的时间复杂度是 <code>o(n^2)</code>，但是我们却说 <code>快排</code> 的时间复杂度是 <code>O(nlogn)</code>，这里的 O 代表一般情况。</p><p>其实还是比较在意 <code>一般情况</code> 下的数据形式</p><blockquote><p>数据用例不同，时间复杂度也是不同的</p></blockquote><h3 id="数据规模"><a href="#数据规模" class="headerlink" title="数据规模"></a>数据规模</h3><p>在决定使用算法的时候，并不是 <code>时间复杂度</code> 越低越好，因为<code>时间复杂度</code>忽略了表达式的一部分。</p><p>所以需要考虑问题的规模，在有常数项的时候且问题规模较小，使用 O(n^2) 的算法比使用 O(n) 要好</p><p>大 O 是数据突破一个点且数据量非常大的情况下所表现出来的时间复杂度，这个非常大是指常数项系数已经不起决定性作用。也就是为什么用 O(n) 时间复杂度代替 O(xn) (x为常系数)，用 O(n^2) 时间复杂度代替 O(xn^2) (x为常系数)。</p><p>所以常说的时间复杂度是省略常数项系数的，在默认数据规模足够大的时候满足以下复杂度排序</p><blockquote><p>O(1)常数阶 &lt; O(logn)对数阶 &lt; O(n)线性阶 &lt; O(n^2)平方阶 &lt; O(n^3) &lt; O(2^n)指数阶</p></blockquote><h3 id="大-O-化简"><a href="#大-O-化简" class="headerlink" title="大 O 化简"></a>大 O 化简</h3><p>一般提到的算法时间复杂度 O(n)、O(n^2)等，其实这些是通过简化后得来的</p><p>例如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(2*n^2 + 10*n + 10000)</span><br></pre></td></tr></table></figure><p>去掉常数项，常数项不会随着 n 的增大而增大</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(2*n^2 + 10*n)</span><br></pre></td></tr></table></figure><p>去掉常数系数，常数系数起不到决定性作用</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^2 + 10*n)</span><br></pre></td></tr></table></figure><p>去掉常数系数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^2 + n)</span><br></pre></td></tr></table></figure><p>只保留最高项，去掉数量级小一级的 n，其实也可以这个理解：O(n(n+1))，去掉常数项</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^2)</span><br></pre></td></tr></table></figure><p>最后的到这个算法的复杂度为 O(n^2)</p><h3 id="log的底数"><a href="#log的底数" class="headerlink" title="log的底数"></a>log的底数</h3><p><code>以 2 为底 n 的对数</code> &#x3D; <code>以 2 为底 10 的对数</code> + <code>以 10 为底 n 的对数</code></p><p>根据上面 大O 的化简，<code>以 2 为底 10 的对数</code> 是一个常数，所以就进行简化，再次抽象上面的等式，<code>以 2 为底 n 的对数</code> &#x3D; <code>以 10 为底 n 的对数</code> ，所以这里的 2 和 10 已经不重要了，直接就是 <strong>logn</strong>。</p><h2 id="算法超时"><a href="#算法超时" class="headerlink" title="算法超时"></a>算法超时</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> 算法基础 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 算法基础 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>876. 链表的中间结点(简单)</title>
       <link href="/article/23908.html"/>
       <url>/article/23908.html</url>
@@ -196,6 +171,31 @@
         <tags>
             
             <tag> LeetCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>复杂度分析</title>
+      <link href="/article/54635.html"/>
+      <url>/article/54635.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><ul><li>时间复杂度分析</li><li>算法超时</li><li>递归算法的时间复杂度</li><li>算法性能分析</li><li>空间复杂度分析</li><li>递归算法的性能分析</li><li>内存消耗</li></ul></blockquote><h2 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2><h3 id="大-O-表示"><a href="#大-O-表示" class="headerlink" title="大 O 表示"></a>大 O 表示</h3><blockquote><p><code>大 O 表示上届的</code>，用它作为算法的最坏情况</p></blockquote><p>输入数据对程序运行速度有很大的影响，假设使用 <code>快速排序</code> ，如果输入的数据顺序是随机的，时间复杂度是 <code>O(nlogn)</code> ，但是当数据已经是有序的情况下，则时间复杂度是 <code>O(n^2)</code>。以 <code>大O</code> 的定义来讲，快速排序的时间复杂度是 <code>o(n^2)</code>，但是我们却说 <code>快排</code> 的时间复杂度是 <code>O(nlogn)</code>，这里的 O 代表一般情况。</p><p>其实还是比较在意 <code>一般情况</code> 下的数据形式</p><blockquote><p>数据用例不同，时间复杂度也是不同的</p></blockquote><h3 id="数据规模"><a href="#数据规模" class="headerlink" title="数据规模"></a>数据规模</h3><p>在决定使用算法的时候，并不是 <code>时间复杂度</code> 越低越好，因为<code>时间复杂度</code>忽略了表达式的一部分。</p><p>所以需要考虑问题的规模，在有常数项的时候且问题规模较小，使用 O(n^2) 的算法比使用 O(n) 要好</p><p>大 O 是数据突破一个点且数据量非常大的情况下所表现出来的时间复杂度，这个非常大是指常数项系数已经不起决定性作用。也就是为什么用 O(n) 时间复杂度代替 O(xn) (x为常系数)，用 O(n^2) 时间复杂度代替 O(xn^2) (x为常系数)。</p><p>所以常说的时间复杂度是省略常数项系数的，在默认数据规模足够大的时候满足以下复杂度排序</p><blockquote><p>O(1)常数阶 &lt; O(logn)对数阶 &lt; O(n)线性阶 &lt; O(n^2)平方阶 &lt; O(n^3) &lt; O(2^n)指数阶</p></blockquote><h3 id="大-O-化简"><a href="#大-O-化简" class="headerlink" title="大 O 化简"></a>大 O 化简</h3><p>一般提到的算法时间复杂度 O(n)、O(n^2)等，其实这些是通过简化后得来的</p><p>例如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(2*n^2 + 10*n + 10000)</span><br></pre></td></tr></table></figure><p>去掉常数项，常数项不会随着 n 的增大而增大</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(2*n^2 + 10*n)</span><br></pre></td></tr></table></figure><p>去掉常数系数，常数系数起不到决定性作用</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^2 + 10*n)</span><br></pre></td></tr></table></figure><p>去掉常数系数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^2 + n)</span><br></pre></td></tr></table></figure><p>只保留最高项，去掉数量级小一级的 n，其实也可以这个理解：O(n(n+1))，去掉常数项</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O(n^2)</span><br></pre></td></tr></table></figure><p>最后的到这个算法的复杂度为 O(n^2)</p><h3 id="log的底数"><a href="#log的底数" class="headerlink" title="log的底数"></a>log的底数</h3><p><code>以 2 为底 n 的对数</code> &#x3D; <code>以 2 为底 10 的对数</code> + <code>以 10 为底 n 的对数</code></p><p>根据上面 大O 的化简，<code>以 2 为底 10 的对数</code> 是一个常数，所以就进行简化，再次抽象上面的等式，<code>以 2 为底 n 的对数</code> &#x3D; <code>以 10 为底 n 的对数</code> ，所以这里的 2 和 10 已经不重要了，直接就是 <strong>logn</strong>。</p><h2 id="算法超时"><a href="#算法超时" class="headerlink" title="算法超时"></a>算法超时</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法基础 </tag>
             
         </tags>
       
