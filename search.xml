@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>349. 两个数组的交集(简单)</title>
+      <link href="/article/97904af0.html"/>
+      <url>/article/97904af0.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><h4 id="349-两个数组的交集"><a href="#349-两个数组的交集" class="headerlink" title="349. 两个数组的交集"></a><a href="https://leetcode.cn/problems/intersection-of-two-arrays/">349. 两个数组的交集</a></h4><p>给定两个数组 <code>nums1</code> 和 <code>nums2</code> ，返回 <em>它们的交集</em> 。输出结果中的每个元素一定是 <strong>唯一</strong> 的。我们可以 <strong>不考虑输出结果的顺序</strong> 。</p><p><strong>示例 1：</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 = [1,2,2,1], nums2 = [2,2]</span><br><span class="line">输出：[2]</span><br></pre></td></tr></table></figure><p><strong>示例 2：</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]</span><br><span class="line">输出：[9,4]</span><br><span class="line">解释：[4,9] 也是可通过的</span><br></pre></td></tr></table></figure><p><strong>提示：</strong></p><ul><li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li><li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li></ul><h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><p>数组形式的哈希表思路（题目中给定了数组的长度，和数组中的值的范围）：</p><p>创建两个足以容下所有数据的<code>容器数组</code>和一个<code>返回数组</code>，遍历第两个<code>参数数组</code>，参数数组的值作为容器数组的下标，为了去重，只有当容器值小于 1 的时候才进行容器数组对应位置自增操作，也就是容器数组中只可能有 0 和 1 两种数据，<code>容器数组 [ i ] == 0</code> 表示 i 未出现在参数数组中，<code>容器数组 [ i ] == 1</code> 表示 i 出现在参数数组中，在容器数组中对参数数组中出现的数进行标记且只标记一次。</p><p>最后在一个循环中对两个容器数组进行比较，当两个容器数组的值都为 1 的时候说明就是交集，直接将其放到返回数组中即可。</p><p><img src="https://s1.vika.cn/space/2023/03/12/39767fa67939413e8699c09ac076e259"></p><p>第一次写的代码：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">intersection</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v1</span><span class="params">(<span class="number">1001</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">v2</span><span class="params">(<span class="number">1001</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; rev;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; val : nums1) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v1[val] &lt; <span class="number">1</span>) &#123;</span><br><span class="line">                ++v1[val];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; val : nums2) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v2[val] &lt; <span class="number">1</span>) &#123;</span><br><span class="line">                ++v2[val];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1001</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (v1[i] == <span class="number">1</span> &amp;&amp; v2[i] == <span class="number">1</span>) &#123;</span><br><span class="line">                rev.<span class="built_in">push_back</span>(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> rev;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> LeetCode必刷题 </category>
+          
+          <category> 哈希表 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 哈希表 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>242. 有效的字母异位词(简单)</title>
       <link href="/article/e76c3ba9.html"/>
       <url>/article/e76c3ba9.html</url>
